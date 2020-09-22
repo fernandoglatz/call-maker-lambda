@@ -89,7 +89,7 @@ public class SNSHandler extends AbstractRequestHandler<SNSEvent, String> {
 		String subject = env.get(SUBJECT);
 		String content = env.get(CONTENT);
 		String message = env.get(MESSAGE);
-		String[] toNumbers = toNumber.split(SEPARATOR);
+		String[] toNumbers = StringUtils.trimToEmpty(toNumber).split(SEPARATOR);
 
 		MimeMessage mimeMessage = new MimeMessage(null, inputStream);
 		String emailSubject = mimeMessage.getSubject();

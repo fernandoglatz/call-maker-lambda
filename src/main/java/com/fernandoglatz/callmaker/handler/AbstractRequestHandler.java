@@ -11,7 +11,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 /**
- * @author fernando.glatz
+ * @author fernandoglatz
  */
 public class AbstractRequestHandler<I, O> implements RequestHandler<I, O> {
 

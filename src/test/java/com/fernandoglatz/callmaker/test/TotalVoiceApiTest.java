@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import com.fernandoglatz.callmaker.dto.MakeCallDTO;
 
 /**
- * @author fernando.glatz
+ * @author fernandoglatz
  */
 public class TotalVoiceApiTest {
 

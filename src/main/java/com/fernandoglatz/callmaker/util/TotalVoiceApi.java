@@ -18,7 +18,7 @@ import com.fernandoglatz.callmaker.dto.MakeCallResponseDTO;
 import com.google.gson.Gson;
 
 /**
- * @author fernando.glatz
+ * @author fernandoglatz
  */
 public class TotalVoiceApi {
 

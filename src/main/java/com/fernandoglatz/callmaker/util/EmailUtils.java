@@ -13,7 +13,7 @@ import javax.mail.Multipart;
 import org.jsoup.Jsoup;
 
 /**
- * @author fernando.glatz
+ * @author fernandoglatz
  */
 public class EmailUtils {
 

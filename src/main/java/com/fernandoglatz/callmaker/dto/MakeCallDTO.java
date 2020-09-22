@@ -6,7 +6,7 @@ package com.fernandoglatz.callmaker.dto;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * @author fernando.glatz
+ * @author fernandoglatz
  */
 public class MakeCallDTO {
 

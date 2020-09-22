@@ -16,7 +16,7 @@ import com.amazonaws.services.lambda.runtime.events.SNSEvent.SNSRecord;
 import com.fernandoglatz.callmaker.handler.SNSHandler;
 
 /**
- * @author fernando.glatz
+ * @author fernandoglatz
  */
 public class SNSHandlerTest {
 

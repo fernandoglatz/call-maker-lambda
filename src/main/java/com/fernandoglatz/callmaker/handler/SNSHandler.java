@@ -11,6 +11,8 @@ import java.util.Map;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.events.SNSEvent;
 import com.amazonaws.services.lambda.runtime.events.SNSEvent.SNS;
@@ -30,7 +32,7 @@ import com.fernandoglatz.callmaker.util.EmailUtils;
 import com.fernandoglatz.callmaker.util.TotalVoiceApi;
 
 /**
- * @author fernando.glatz
+ * @author fernandoglatz
  */
 public class SNSHandler extends AbstractRequestHandler<SNSEvent, String> {
 
@@ -96,9 +98,10 @@ public class SNSHandler extends AbstractRequestHandler<SNSEvent, String> {
 		logInfo("Subject: " + subject);
 		//logInfo("Content: " + emailContent);
 
-		if (subject.equalsIgnoreCase(emailSubject) && emailContent != null && content != null //
-				&& emailContent.toLowerCase().contains(content.toLowerCase())) {
+		boolean subjectMatch = StringUtils.isNotEmpty(subject) ? subject.equalsIgnoreCase(emailSubject) : true;
+		boolean contentMatch = StringUtils.isNotEmpty(content) ? StringUtils.containsIgnoreCase(emailContent, content) : true;
 
+		if (subjectMatch && contentMatch) {
 			TotalVoiceApi totalVoiceApi = new TotalVoiceApi(apiKey);
 
 			for (String number : toNumbers) {
@@ -116,7 +119,7 @@ public class SNSHandler extends AbstractRequestHandler<SNSEvent, String> {
 		dto.setMessage(message);
 		dto.setVoiceType(voiceType);
 
-		logInfo("Calling " + toNumber);
+		logInfo("Calling to " + toNumber);
 
 		MakeCallResponseDTO responseDTO = totalVoiceApi.makeCall(dto);
 		String responseMessage = responseDTO.getMessage();

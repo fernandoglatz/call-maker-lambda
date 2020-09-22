@@ -28,6 +28,10 @@ public class TotalVoiceApi {
 	private static final String APPLICATION_JSON = "application/json";
 	private static final Integer CONNECTION_TIMEOUT = 600000; //10 minutes
 
+	private static final Integer START_HTTP_2XX = 200;
+	private static final Integer START_HTTP_3XX = 300;
+	private static final Integer END_HTTP_3XX = 399;
+
 	private static final String VOICE_TYPE_DEFAULT = "br-Camila";
 	private static final String TOTAL_VOICE_TTS_URL = "https://api.totalvoice.com.br/tts";
 
@@ -71,8 +75,20 @@ public class TotalVoiceApi {
 				outputStream.flush();
 			}
 
-			try (InputStream inputStream = connection.getInputStream()) {
-				response = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
+			Integer responseCode = connection.getResponseCode();
+
+			if (responseCode >= START_HTTP_2XX && responseCode <= END_HTTP_3XX) {
+				try (InputStream inputStream = connection.getInputStream()) {
+					response = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
+				}
+			} else {
+				try (InputStream inputStream = connection.getErrorStream()) {
+					response = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
+				}
+			}
+
+			if (responseCode >= START_HTTP_3XX && responseCode <= END_HTTP_3XX) {
+				response = sendRequest(response, json); //redirect
 			}
 		} finally {
 			if (connection != null) {

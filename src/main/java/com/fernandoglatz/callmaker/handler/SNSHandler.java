@@ -95,7 +95,7 @@ public class SNSHandler extends AbstractRequestHandler<SNSEvent, String> {
 		String emailSubject = mimeMessage.getSubject();
 		String emailContent = EmailUtils.getContent(mimeMessage);
 
-		logInfo("Subject: " + subject);
+		logInfo("Subject: " + emailSubject);
 		//logInfo("Content: " + emailContent);
 
 		boolean subjectMatch = StringUtils.isNotEmpty(subject) ? subject.equalsIgnoreCase(emailSubject) : true;

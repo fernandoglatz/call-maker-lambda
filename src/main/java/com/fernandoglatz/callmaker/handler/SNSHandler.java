@@ -42,6 +42,7 @@ public class SNSHandler extends AbstractRequestHandler<SNSEvent, String> {
 	private static final String TO_NUMBER = "to_number";
 	private static final String SUBJECT = "subject";
 	private static final String CONTENT = "content";
+	private static final String CONTENT_IGNORE_MESSAGE = "content_ignore_message";
 	private static final String MESSAGE = "message";
 	private static final String SEPARATOR = ";";
 
@@ -88,8 +89,10 @@ public class SNSHandler extends AbstractRequestHandler<SNSEvent, String> {
 		String toNumber = env.get(TO_NUMBER);
 		String subject = env.get(SUBJECT);
 		String content = env.get(CONTENT);
+		String contentIgnoreMessage = env.get(CONTENT_IGNORE_MESSAGE);
 		String message = env.get(MESSAGE);
 		String[] toNumbers = StringUtils.trimToEmpty(toNumber).split(SEPARATOR);
+		String[] contentsIgnoreMessage = StringUtils.trimToEmpty(contentIgnoreMessage).split(SEPARATOR);
 
 		MimeMessage mimeMessage = new MimeMessage(null, inputStream);
 		String emailSubject = mimeMessage.getSubject();
@@ -100,8 +103,15 @@ public class SNSHandler extends AbstractRequestHandler<SNSEvent, String> {
 
 		boolean subjectMatch = StringUtils.isNotEmpty(subject) ? subject.equalsIgnoreCase(emailSubject) : true;
 		boolean contentMatch = StringUtils.isNotEmpty(content) ? StringUtils.containsIgnoreCase(emailContent, content) : true;
+		boolean contentIgnoreMatch = false;
 
-		if (subjectMatch && contentMatch) {
+		if (StringUtils.isNotEmpty(contentIgnoreMessage)) {
+			for (String contentIgnore : contentsIgnoreMessage) {
+				contentIgnoreMatch |= StringUtils.containsIgnoreCase(emailContent, contentIgnore);
+			}
+		}
+
+		if (subjectMatch && contentMatch && !contentIgnoreMatch) {
 			TotalVoiceApi totalVoiceApi = new TotalVoiceApi(apiKey);
 
 			for (String number : toNumbers) {

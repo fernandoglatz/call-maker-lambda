@@ -13,9 +13,9 @@ import java.nio.charset.StandardCharsets;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fernandoglatz.callmaker.dto.MakeCallDTO;
 import com.fernandoglatz.callmaker.dto.MakeCallResponseDTO;
-import com.google.gson.Gson;
 
 /**
  * @author fernandoglatz
@@ -46,11 +46,11 @@ public class TotalVoiceApi {
 			dto.setVoiceType(VOICE_TYPE_DEFAULT);
 		}
 
-		Gson gson = new Gson();
-		String json = gson.toJson(dto);
+		ObjectMapper objectMapper = JsonUtils.getMapper();
+		String json = objectMapper.writeValueAsString(dto);
 		String jsonResponse = sendRequest(TOTAL_VOICE_TTS_URL, json);
 
-		return gson.fromJson(jsonResponse, MakeCallResponseDTO.class);
+		return objectMapper.readValue(jsonResponse, MakeCallResponseDTO.class);
 	}
 
 	private String sendRequest(String urlStr, String json) throws IOException {

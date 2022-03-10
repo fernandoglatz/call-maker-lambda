@@ -3,35 +3,35 @@
  */
 package com.fernandoglatz.callmaker.dto;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author fernandoglatz
  */
 public class MakeCallDTO {
 
-	@SerializedName("numero_destino")
+	@JsonProperty("numero_destino")
 	private String toNumber;
 
-	@SerializedName("mensagem")
+	@JsonProperty("mensagem")
 	private String message;
 
-	@SerializedName("resposta_usuario")
+	@JsonProperty("resposta_usuario")
 	private Boolean waitResponse = false;
 
-	@SerializedName("tipo_voz")
+	@JsonProperty("tipo_voz")
 	private String voiceType;
 
-	@SerializedName("bina")
+	@JsonProperty("bina")
 	private String fromNumber;
 
-	@SerializedName("gravar_audio")
+	@JsonProperty("gravar_audio")
 	private Boolean audioRecord = false;
 
-	@SerializedName("detecta_caixa")
+	@JsonProperty("detecta_caixa")
 	private Boolean detectPoBox = true;
 
-	@SerializedName("bina_inteligente")
+	@JsonProperty("bina_inteligente")
 	private Boolean smartId = false;
 
 	public String getToNumber() {

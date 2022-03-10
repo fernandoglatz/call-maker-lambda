@@ -3,23 +3,23 @@
  */
 package com.fernandoglatz.callmaker.dto;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author fernandoglatz
  */
 public class MakeCallResponseDTO {
 
-	@SerializedName("status")
+	@JsonProperty("status")
 	private Integer status;
 
-	@SerializedName("sucesso")
+	@JsonProperty("sucesso")
 	private Boolean completed;
 
-	@SerializedName("motivo")
+	@JsonProperty("motivo")
 	private Integer reason;
 
-	@SerializedName("mensagem")
+	@JsonProperty("mensagem")
 	private String message;
 
 	public Integer getStatus() {

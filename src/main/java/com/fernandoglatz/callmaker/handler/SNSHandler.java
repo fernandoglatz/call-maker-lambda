@@ -102,15 +102,14 @@ public class SNSHandler extends AbstractRequestHandler<SNSEvent, String> {
 		String emailContent = EmailUtils.getContent(mimeMessage);
 
 		logInfo("Subject: " + emailSubject);
-		//logInfo("Content: " + emailContent);
 
-		boolean subjectMatch = StringUtils.isNotEmpty(subject) ? subject.equalsIgnoreCase(emailSubject) : true;
-		boolean contentMatch = StringUtils.isNotEmpty(content) ? StringUtils.containsIgnoreCase(emailContent, content) : true;
+		boolean subjectMatch = StringUtils.isEmpty(subject) || subject.equalsIgnoreCase(emailSubject);
+		boolean contentMatch = StringUtils.isEmpty(content) || StringUtils.contains(emailContent, content);
 		boolean contentIgnoreMatch = false;
 
 		if (StringUtils.isNotEmpty(contentIgnoreMessage)) {
 			for (String contentIgnore : contentsIgnoreMessage) {
-				contentIgnoreMatch |= StringUtils.containsIgnoreCase(emailContent, contentIgnore);
+				contentIgnoreMatch |= StringUtils.contains(emailContent, contentIgnore);
 			}
 		}
 
